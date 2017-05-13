@@ -48,6 +48,15 @@ public class JsonHelper {
                     }
                     attr.setChildrenList(childAttributes);
                 }
+                JSONArray requiredDocs = c.getJSONArray("requiredDocuments");
+                ArrayList<String> childDocs = new ArrayList<>();
+                for (int j = 0; j < requiredDocs.length(); j++) {
+                    String doc = (String) requiredDocs.get(j);
+                    if (doc != null && !doc.isEmpty()) {
+                        childDocs.add(doc);
+                    }
+                }
+                attr.setDocsList(childDocs);
                 attr.setId(id);
                 attr.setName(title);
                 attr.setCategory(category);

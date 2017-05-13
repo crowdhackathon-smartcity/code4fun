@@ -1,6 +1,7 @@
 package com.github.bagiasn.code4fun.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
@@ -115,11 +116,27 @@ public class SearchActivity extends Activity {
         }
 
         @Override
-        public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindItemViewHolder(RecyclerView.ViewHolder holder, final int position) {
             ItemViewHolder itemHolder = (ItemViewHolder) holder;
 
             // bind your view here
             itemHolder.tvItem.setText(list.get(position).getName());
+            itemHolder.rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Attribute selectedAttr = list.get(position);
+                    String listString = "";
+                    for (String s : selectedAttr.getDocsList()) {
+                        listString += s + "#";
+                    }
+                    String orgString = selectedAttr.getOwner().getName();
+                    Intent intent = new Intent(SearchActivity.this, AttributeActivity.class);
+                    intent.putExtra("documents", listString);
+                    intent.putExtra("orgs", orgString);
+                    SearchActivity.this.startActivity(intent);
+
+                }
+            });
         }
 
         @Override
@@ -149,10 +166,10 @@ public class SearchActivity extends Activity {
     private class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tvItem;
-
+        private final View rootView;
         public ItemViewHolder(View itemView) {
             super(itemView);
-
+            rootView = itemView;
             tvItem = (TextView) itemView.findViewById(R.id.header_item);
         }
     }

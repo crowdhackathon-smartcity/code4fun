@@ -16,6 +16,16 @@ public class Attribute {
     private String externalLink;
     private ArrayList<CategoryChild> childrenList;
 
+    public ArrayList<String> getDocsList() {
+        return docsList;
+    }
+
+    public void setDocsList(ArrayList<String> docsList) {
+        this.docsList = docsList;
+    }
+
+    private ArrayList<String> docsList;
+
     public String getId() {
         return id;
     }

@@ -6,4 +6,5 @@
     <string name="error_services">Error while loading services</string>
     <string name="voice_search_text">Πατήστε το πλήκτρο για να ξεκινήσει η ηχογράφηση</string>
     <string name="voice_search_button">voice_search_content_desc</string>
+    <string name="required_documents">Απαιτούμενα έγγραφα</string>
 </resources>
