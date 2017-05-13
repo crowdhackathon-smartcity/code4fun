@@ -1,4 +1,4 @@
-package com.github.bagiasn.myticket.activities;
+package com.github.bagiasn.code4fun.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,10 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import com.github.bagiasn.myticket.others.OptionItemDecoration;
-import com.github.bagiasn.myticket.R;
-import com.github.bagiasn.myticket.adapters.MenuAdapter;
-import com.github.bagiasn.myticket.models.app.Menu;
+import com.github.bagiasn.code4fun.others.OptionItemDecoration;
+import com.github.bagiasn.code4fun.R;
+import com.github.bagiasn.code4fun.adapters.MenuAdapter;
+import com.github.bagiasn.code4fun.models.app.Menu;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -27,7 +27,7 @@ public class MenuActivity extends AppCompatActivity {
         menu.addItemDecoration(new OptionItemDecoration(15));
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        myToolbar.setSubtitle("Κάτι κλισέ...");
+        myToolbar.setSubtitle("Ο ψηφιακός βοηθός του κάθε δημότη");
         myToolbar.setSubtitleTextAppearance(this, R.style.Toolbar_SubTitle);
     }
 }

@@ -1,4 +1,4 @@
-package com.github.bagiasn.myticket.others;
+package com.github.bagiasn.code4fun.others;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

@@ -1,12 +1,14 @@
-package com.github.bagiasn.myticket.models.database;
+package com.github.bagiasn.code4fun.models.database;
+
+import java.util.ArrayList;
 
 /**
  * This model represents an organization.
- * It follows the structure of the server's database.
  */
 
 public class Organization {
     private String name;
+    private ArrayList<Location> locationList;
 
     public String getName() {
         return name;

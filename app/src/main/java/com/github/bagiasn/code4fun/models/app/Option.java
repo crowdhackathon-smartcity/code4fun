@@ -1,4 +1,4 @@
-package com.github.bagiasn.myticket.models.app;
+package com.github.bagiasn.code4fun.models.app;
 
 /**
  * Class for representing an option in the menu.

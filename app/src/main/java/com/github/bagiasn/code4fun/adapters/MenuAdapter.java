@@ -1,4 +1,4 @@
-package com.github.bagiasn.myticket.adapters;
+package com.github.bagiasn.code4fun.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.bagiasn.myticket.R;
-import com.github.bagiasn.myticket.models.app.Option;
+import com.github.bagiasn.code4fun.R;
+import com.github.bagiasn.code4fun.models.app.Option;
 
 import java.util.List;
 
