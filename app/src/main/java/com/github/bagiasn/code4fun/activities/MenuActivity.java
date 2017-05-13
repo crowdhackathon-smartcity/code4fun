@@ -18,7 +18,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        MenuAdapter menuAdapter = new MenuAdapter(Menu.getOptions());
+        MenuAdapter menuAdapter = new MenuAdapter(Menu.getOptions(), this);
 
         RecyclerView menu = (RecyclerView) findViewById(R.id.recycler_menu);
         menu.setAdapter(menuAdapter);

@@ -1,5 +1,7 @@
 package com.github.bagiasn.code4fun.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.bagiasn.code4fun.R;
+import com.github.bagiasn.code4fun.activities.SearchActivity;
 import com.github.bagiasn.code4fun.models.app.Option;
 
 import java.util.List;
@@ -19,9 +22,11 @@ import java.util.List;
 
 public class MenuAdapter extends Adapter<MenuAdapter.MenuViewHolder>{
     private List<Option> menuList;
+    private Context context;
 
-    public MenuAdapter(List<Option> list) {
+    public MenuAdapter(List<Option> list, Context context) {
         this.menuList = list;
+        this.context = context;
     }
     class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -38,7 +43,26 @@ public class MenuAdapter extends Adapter<MenuAdapter.MenuViewHolder>{
         }
 
         @Override
-        public void onClick(View v) {}
+        public void onClick(View v) {
+            Option selectedOpt = menuList.get(getAdapterPosition());
+            Intent intent;
+            switch (selectedOpt.title) {
+                case "Ψάξε το":
+                    intent = new Intent(context, SearchActivity.class);
+                    context.startActivity(intent);
+                    break;
+                case "Πες το":
+                    intent = new Intent(context, SearchActivity.class);
+                    context.startActivity(intent);
+                    break;
+                case "Αποθηκευμένες αναζητήσεις":
+                    intent = new Intent(context, SearchActivity.class);
+                    context.startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     @Override
     public MenuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
