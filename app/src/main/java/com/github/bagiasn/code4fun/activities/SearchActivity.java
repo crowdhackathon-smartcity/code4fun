@@ -3,7 +3,6 @@ package com.github.bagiasn.code4fun.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -90,12 +89,13 @@ public class SearchActivity extends Activity {
             }
         }
     }
-    class BasicCategory extends StatelessSection {
+
+    private class BasicCategory extends StatelessSection {
 
         ArrayList<Attribute> list = new ArrayList<>();
         String title;
 
-        public BasicCategory(ArrayList<Attribute> list, String title) {
+        BasicCategory(ArrayList<Attribute> list, String title) {
             // call constructor with layout resources for this Section header and items
             super(R.layout.section_header, R.layout.section_item);
             this.list = list;
@@ -161,7 +161,7 @@ public class SearchActivity extends Activity {
 
         private final TextView tvTitle;
 
-        public HeaderViewHolder(View view) {
+        HeaderViewHolder(View view) {
             super(view);
 
             tvTitle = (TextView) view.findViewById(R.id.header_section);
@@ -172,7 +172,8 @@ public class SearchActivity extends Activity {
 
         private final TextView tvItem;
         private final View rootView;
-        public ItemViewHolder(View itemView) {
+
+        ItemViewHolder(View itemView) {
             super(itemView);
             rootView = itemView;
             tvItem = (TextView) itemView.findViewById(R.id.header_item);

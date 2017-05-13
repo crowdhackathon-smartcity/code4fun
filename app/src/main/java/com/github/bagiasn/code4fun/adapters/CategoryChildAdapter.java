@@ -1,13 +1,20 @@
 package com.github.bagiasn.code4fun.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.bagiasn.code4fun.R;
+import com.github.bagiasn.code4fun.activities.AttributeActivity;
+import com.github.bagiasn.code4fun.activities.SearchActivity;
+import com.github.bagiasn.code4fun.helpers.HttpHelper;
+import com.github.bagiasn.code4fun.helpers.JsonHelper;
 import com.github.bagiasn.code4fun.models.database.Attribute;
 import com.github.bagiasn.code4fun.models.database.CategoryChild;
 import com.github.bagiasn.code4fun.models.database.Organization;
@@ -39,7 +46,10 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<CategoryChildAdap
         }
 
         @Override
-        public void onClick(View v) {}
+        public void onClick(View v) {
+            CategoryChild selectedChild = children.get(getAdapterPosition());
+            new GetAttributeById().execute(selectedChild.getId());
+        }
     }
 
     @Override
@@ -60,5 +70,45 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<CategoryChildAdap
     @Override
     public int getItemCount() {
         return children.size();
+    }
+
+    private class GetAttributeById extends AsyncTask<String,Void, Boolean> {
+        private Attribute attribute;
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String url = "http://46.101.196.53:54870/getServiceById?serviceId=" + params[0];
+            String jsonResponse = HttpHelper.makeJsonRequest(url);
+            if (jsonResponse != null) {
+                attribute = JsonHelper.getAttribute(jsonResponse);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+
+            if (result) {
+                String listString = "";
+                for (String s : attribute.getDocsList()) {
+                    listString += s + "#";
+                }
+                String servString = "";
+                if (attribute.getChildrenList() != null) {
+                    for (CategoryChild c : attribute.getChildrenList()) {
+                        servString += c.getId() + "!" + c.getTitle() + "#";
+                    }
+                }
+                String orgString = attribute.getOwner().getName();
+                Intent intent = new Intent(context, AttributeActivity.class);
+                intent.putExtra("documents", listString);
+                intent.putExtra("orgs", orgString);
+                intent.putExtra("services", servString);
+                context.startActivity(intent);
+            } else {
+                Toast.makeText(context, R.string.error_services, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

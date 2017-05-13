@@ -106,7 +106,8 @@ public class JsonHelper {
     public static Attribute getAttribute(String json) {
         Attribute attribute = new Attribute();
         try {
-            JSONObject item = new JSONObject(json);
+            JSONArray root = new JSONArray(json);
+            JSONObject item = root.getJSONObject(0);
 
             String id = item.getString("_id");
             String category = item.getString("category");
