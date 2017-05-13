@@ -102,4 +102,59 @@ public class JsonHelper {
         }
         return markers;
     }
+
+    public static Attribute getAttribute(String json) {
+        Attribute attribute = new Attribute();
+        try {
+            JSONObject item = new JSONObject(json);
+
+            String id = item.getString("_id");
+            String category = item.getString("category");
+            String title = item.getString("title");
+            String orgCategory = item.getString("organizationCategory");
+            String url = item.getString("url");
+            JSONArray requiredAttr = item.getJSONArray("requiredServices");
+            // Start building the attribute.
+            if (requiredAttr == null || requiredAttr.length() == 0) {
+                // This is a document.
+                attribute.setChildrenList(null);
+            } else {
+                ArrayList<CategoryChild> childAttributes = new ArrayList<>();
+                for (int j = 0; j < requiredAttr.length(); j++) {
+                    JSONObject child = requiredAttr.getJSONObject(j);
+                    if (child != null) {
+                        CategoryChild categoryChild= new CategoryChild();
+                        categoryChild.setTitle(child.getString("title"));
+                        categoryChild.setId(child.getString("id"));
+                        childAttributes.add(categoryChild);
+                    }
+                }
+                attribute.setChildrenList(childAttributes);
+            }
+            JSONArray requiredDocs = item.getJSONArray("requiredDocuments");
+            ArrayList<String> childDocs = new ArrayList<>();
+            for (int j = 0; j < requiredDocs.length(); j++) {
+                String doc = (String) requiredDocs.get(j);
+                if (doc != null && !doc.isEmpty()) {
+                    childDocs.add(doc);
+                }
+            }
+            attribute.setDocsList(childDocs);
+            attribute.setId(id);
+            attribute.setName(title);
+            attribute.setCategory(category);
+            if (url.isEmpty())
+                attribute.setExternalLink("");
+            else
+                attribute.setExternalLink(url);
+            Organization org = new Organization();
+            org.setName(orgCategory);
+            attribute.setOwner(org);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return attribute;
+    }
 }
