@@ -3,6 +3,10 @@ package com.github.bagiasn.code4fun.helpers;
 import com.github.bagiasn.code4fun.models.database.Attribute;
 import com.github.bagiasn.code4fun.models.database.CategoryChild;
 import com.github.bagiasn.code4fun.models.database.Organization;
+import com.github.bagiasn.code4fun.models.database.OrganizationMarker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,12 +41,12 @@ public class JsonHelper {
                     attr.setChildrenList(null);
                 } else {
                     ArrayList<CategoryChild> childAttributes = new ArrayList<>();
-                    for (int j = 0; i < requiredAttr.length(); i++) {
-                        JSONObject child = root.getJSONObject(j);
+                    for (int j = 0; j < requiredAttr.length(); j++) {
+                        JSONObject child = requiredAttr.getJSONObject(j);
                         if (child != null) {
                             CategoryChild categoryChild= new CategoryChild();
                             categoryChild.setTitle(child.getString("title"));
-                            categoryChild.setId(child.getString("_id"));
+                            categoryChild.setId(child.getString("id"));
                             childAttributes.add(categoryChild);
                         }
                     }
@@ -75,5 +79,27 @@ public class JsonHelper {
             e.printStackTrace();
         }
         return attributes;
+    }
+
+    public static ArrayList<OrganizationMarker> getMarkers(String json) {
+        ArrayList<OrganizationMarker> markers = new ArrayList<>();
+        try {
+            JSONObject root = new JSONObject(json);
+            JSONArray results = root.getJSONArray("results");
+            for(int i = 0; i < results.length(); i++) {
+                JSONObject item = results.getJSONObject(i);
+                String name = item.getString("name");
+                double longtitude = item.getDouble("longitude");
+                double latitude = item.getDouble("latitude");
+                OrganizationMarker marker = new OrganizationMarker();
+                marker.setName(name);
+                marker.setLatitude(latitude);
+                marker.setLongtitude(longtitude);
+                markers.add(marker);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return markers;
     }
 }

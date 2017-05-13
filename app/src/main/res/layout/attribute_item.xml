@@ -10,12 +10,4 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="16sp"/>
-
-    <TextView
-        android:id="@+id/attribute_subtitle"
-        android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textStyle="italic"/>
 </LinearLayout>

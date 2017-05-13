@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.github.bagiasn.code4fun.R;
 import com.github.bagiasn.code4fun.models.database.Attribute;
+import com.github.bagiasn.code4fun.models.database.CategoryChild;
 import com.github.bagiasn.code4fun.models.database.Organization;
 
 import java.util.List;
@@ -17,24 +18,22 @@ import java.util.List;
  * Adapter for populating attributes into the search list.
  */
 
-public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.AttributeViewHolder> {
-    private List<Attribute> attributes;
+public class CategoryChildAdapter extends RecyclerView.Adapter<CategoryChildAdapter.AttributeViewHolder> {
+    private List<CategoryChild> children;
     private Context context;
 
-    public AttributeAdapter(List<Attribute> list, Context context) {
+    public CategoryChildAdapter(List<CategoryChild> list, Context context) {
         this.context = context;
-        this.attributes = list;
+        this.children = list;
     }
 
     class AttributeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView title;
-        private TextView subTitle;
 
         AttributeViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.attribute_title);
-            subTitle = (TextView) itemView.findViewById(R.id.attribute_subtitle);
 
             itemView.setOnClickListener(this);
         }
@@ -52,15 +51,14 @@ public class AttributeAdapter extends RecyclerView.Adapter<AttributeAdapter.Attr
 
     @Override
     public void onBindViewHolder(AttributeViewHolder holder, int position) {
-        Attribute attribute = attributes.get(position);
-        Organization org = attribute.getOwner();
+        CategoryChild categoryChild = children.get(position);
 
-        holder.title.setText(attribute.getName());
-        holder.subTitle.setText(org.getName());
+        holder.title.setText(categoryChild.getTitle());
+
     }
 
     @Override
     public int getItemCount() {
-        return attributes.size();
+        return children.size();
     }
 }

@@ -89,8 +89,6 @@ public class SearchActivity extends Activity {
                 Toast.makeText(SearchActivity.this, R.string.error_services, Toast.LENGTH_SHORT).show();
             }
         }
-
-
     }
     class BasicCategory extends StatelessSection {
 
@@ -129,10 +127,17 @@ public class SearchActivity extends Activity {
                     for (String s : selectedAttr.getDocsList()) {
                         listString += s + "#";
                     }
+                    String servString = "";
+                    if (selectedAttr.getChildrenList() != null) {
+                        for (CategoryChild c : selectedAttr.getChildrenList()) {
+                            servString += c.getId() + "!" + c.getTitle() + "#";
+                        }
+                    }
                     String orgString = selectedAttr.getOwner().getName();
                     Intent intent = new Intent(SearchActivity.this, AttributeActivity.class);
                     intent.putExtra("documents", listString);
                     intent.putExtra("orgs", orgString);
+                    intent.putExtra("services", servString);
                     SearchActivity.this.startActivity(intent);
 
                 }
