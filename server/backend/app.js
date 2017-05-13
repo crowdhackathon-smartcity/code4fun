@@ -2,6 +2,21 @@ var express = require('express');
 var app = express();
 
 var serviceApi = require('./app/services.js');
+var nluApi = require('./app/nlu.js');
+
+app.get('/processText', function(req, res) {
+	var text = req.query.text;
+	nluApi.processText(text, function(err, result) {
+		if(err) {
+			res.status(400);
+			res.end();
+		}
+		else {
+			res.send(result);
+			res.end();
+		}
+	});	
+});
 
 app.get('/getListOfServices', function(req, res) {
 	serviceApi.getListOfServices(function(err, services) {

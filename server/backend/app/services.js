@@ -7,7 +7,7 @@ db.bind('organization');
 module.exports = {
 
 	getListOfServices: function(callback) {
-		db.service.find().toArray(function(err, items) {
+		db.service.find({$where: "this.category.length > 0"}).toArray(function(err, items) {
 			callback(null, items);
 		});
 	},	
