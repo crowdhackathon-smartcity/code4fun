@@ -1,8 +1,7 @@
 # code4fun
 
-This project consists of three parts:
-1. Android app - for scheduling visits, getting notifications for possible rearrangements, viewing your history of visits.
-2. ESP8266 (with ArduinoIDE) - for automatically checking-in the user and helping the system getting a sense of a live queue.
-3  NodeJS - for managing the whole backend functionality, including database management etc.
+This project, now, consists of two parts:
+1. Android app - for searching supporting documents, getting valuable info, voice-searching.
+2. NodeJS - for managing the whole backend functionality, including database management, retrieving info etc.
 
-Code from 2 and 3 coming soon.
+Code from 2 coming soon.
