@@ -1,6 +1,7 @@
 package com.github.bagiasn.code4fun.helpers;
 
 import com.github.bagiasn.code4fun.models.database.Attribute;
+import com.github.bagiasn.code4fun.models.database.CategoryChild;
 import com.github.bagiasn.code4fun.models.database.Organization;
 
 import org.json.JSONArray;
@@ -35,11 +36,15 @@ public class JsonHelper {
                     // This is a document.
                     attr.setChildrenList(null);
                 } else {
-                    ArrayList<String> childAttributes = new ArrayList<>();
+                    ArrayList<CategoryChild> childAttributes = new ArrayList<>();
                     for (int j = 0; i < requiredAttr.length(); i++) {
                         JSONObject child = root.getJSONObject(j);
-                        if (child != null)
-                            childAttributes.add(child.getString("_id"));
+                        if (child != null) {
+                            CategoryChild categoryChild= new CategoryChild();
+                            categoryChild.setTitle(child.getString("title"));
+                            categoryChild.setId(child.getString("_id"));
+                            childAttributes.add(categoryChild);
+                        }
                     }
                     attr.setChildrenList(childAttributes);
                 }

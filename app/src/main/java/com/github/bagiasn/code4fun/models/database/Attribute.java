@@ -14,7 +14,7 @@ public class Attribute {
     private String category;
     private String name;
     private String externalLink;
-    private ArrayList<String> childrenList;
+    private ArrayList<CategoryChild> childrenList;
 
     public String getId() {
         return id;
@@ -56,11 +56,11 @@ public class Attribute {
         this.owner = owner;
     }
 
-    public ArrayList<String> getChildrenList() {
+    public ArrayList<CategoryChild> getChildrenList() {
         return childrenList;
     }
 
-    public void setChildrenList(ArrayList<String> childrenList) {
+    public void setChildrenList(ArrayList<CategoryChild> childrenList) {
         this.childrenList = childrenList;
     }
 }

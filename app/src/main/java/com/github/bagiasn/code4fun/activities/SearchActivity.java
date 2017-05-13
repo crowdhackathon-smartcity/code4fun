@@ -1,8 +1,8 @@
 package com.github.bagiasn.code4fun.activities;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +17,7 @@ import com.github.bagiasn.code4fun.R;
 import com.github.bagiasn.code4fun.helpers.HttpHelper;
 import com.github.bagiasn.code4fun.helpers.JsonHelper;
 import com.github.bagiasn.code4fun.models.database.Attribute;
+import com.github.bagiasn.code4fun.models.database.CategoryChild;
 import com.github.bagiasn.code4fun.others.OptionItemDecoration;
 
 import java.util.ArrayList;
@@ -24,12 +25,12 @@ import java.util.ArrayList;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends Activity {
     private static final String TAG = SearchActivity.class.getSimpleName();
     private ArrayList<Attribute> attributesList;
     private SectionedRecyclerViewAdapter sectionAdapter;
-    private static final String[] COUNTRIES = new String[] {
-            "Belgium", "France", "Italy", "Germany", "Spain"
+    private static final String[] CATEGORIES = new String[] {
+            "Οικογένεια", "Κατοικία", "Δημόσια Τάξη", "Επιδόματα"
     };
 
     @Override
@@ -47,15 +48,6 @@ public class SearchActivity extends AppCompatActivity {
         new GetAttributes().execute();
     }
 
-    @Nullable
-    private Attribute getAttributeById(String id) {
-        for (int i = 0; i < attributesList.size(); i++) {
-            if (attributesList.get(i).getId().equals(id))
-                return attributesList.get(i);
-        }
-        return null;
-    }
-
     private class GetAttributes extends AsyncTask<String,Void, Boolean> {
 
         @Override
@@ -65,20 +57,15 @@ public class SearchActivity extends AppCompatActivity {
             if (jsonResponse != null) {
                 attributesList = JsonHelper.getAttributes(jsonResponse);
                 if (attributesList != null) {
-                    for (Attribute attr : attributesList) {
-                        String category = attr.getCategory();
-                        if (category != null && !category.isEmpty()) {
-                            ArrayList<String> childrenIDs = attr.getChildrenList();
-                            if (childrenIDs != null) {
-                                ArrayList<Attribute> attrItems = new ArrayList<>();
-                                for (int k = 0; k < childrenIDs.size(); k++) {
-                                    Attribute item = getAttributeById(childrenIDs.get(k));
-                                    if (item != null)
-                                        attrItems.add(item);
-                                }
-                                sectionAdapter.addSection(new BasicCategory(attrItems, category));
+                    for (String category: CATEGORIES){
+                        ArrayList<Attribute> subList = new ArrayList<>();
+                        for (Attribute attr : attributesList) {
+                            String attrCategory = attr.getCategory();
+                            if (category.equals(attrCategory)) {
+                                subList.add(attr);
                             }
                         }
+                        sectionAdapter.addSection(new BasicCategory(subList, category));
                     }
                     return true;
                 }
@@ -94,7 +81,7 @@ public class SearchActivity extends AppCompatActivity {
             if (result) {
                 AutoCompleteTextView searchBox = (AutoCompleteTextView) findViewById(R.id.search_box);
                 searchBox.setAdapter(new ArrayAdapter<>(SearchActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, COUNTRIES));
+                        android.R.layout.simple_dropdown_item_1line, CATEGORIES));
                 RecyclerView recyclerAttr = (RecyclerView) findViewById(R.id.attribute_list);
                 recyclerAttr.setAdapter(sectionAdapter);
             } else {
