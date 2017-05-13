@@ -8,12 +8,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.bagiasn.code4fun.R;
+import com.github.bagiasn.code4fun.adapters.CategoryChildAdapter;
 import com.github.bagiasn.code4fun.helpers.HttpHelper;
 import com.github.bagiasn.code4fun.helpers.JsonHelper;
 import com.github.bagiasn.code4fun.models.database.Attribute;
@@ -29,6 +31,7 @@ public class SearchActivity extends Activity {
     private static final String TAG = SearchActivity.class.getSimpleName();
     private ArrayList<Attribute> attributesList;
     private SectionedRecyclerViewAdapter sectionAdapter;
+    private ArrayList<String> autoCompleteList;
     private static final String[] CATEGORIES = new String[] {
             "Οικογένεια", "Κατοικία", "Δημόσια Τάξη", "Επιδόματα"
     };
@@ -67,6 +70,11 @@ public class SearchActivity extends Activity {
                         }
                         sectionAdapter.addSection(new BasicCategory(subList, category));
                     }
+                    // Construct the autocomplete list.
+                    autoCompleteList = new ArrayList<>();
+                    for (Attribute attr : attributesList) {
+                        autoCompleteList.add(attr.getName());
+                    }
                     return true;
                 }
             }
@@ -81,9 +89,67 @@ public class SearchActivity extends Activity {
             if (result) {
                 AutoCompleteTextView searchBox = (AutoCompleteTextView) findViewById(R.id.search_box);
                 searchBox.setAdapter(new ArrayAdapter<>(SearchActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, CATEGORIES));
+                        android.R.layout.simple_dropdown_item_1line, autoCompleteList.toArray()));
+                searchBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String selectedTitle = autoCompleteList.get(position);
+                        String selectedId = getIdFromList(selectedTitle);
+                        new GetAttributeById().execute(selectedId);
+                    }
+                });
                 RecyclerView recyclerAttr = (RecyclerView) findViewById(R.id.attribute_list);
                 recyclerAttr.setAdapter(sectionAdapter);
+            } else {
+                Toast.makeText(SearchActivity.this, R.string.error_services, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private String getIdFromList(String selectedTitle) {
+        for (Attribute attr : attributesList) {
+            String name = attr.getName();
+            if (selectedTitle.equals(name)) {
+                return attr.getId();
+            }
+        }
+        return "";
+    }
+
+    private class GetAttributeById extends AsyncTask<String,Void, Boolean> {
+        private Attribute attribute;
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String url = "http://46.101.196.53:54870/getServiceById?serviceId=" + params[0];
+            String jsonResponse = HttpHelper.makeJsonRequest(url);
+            if (jsonResponse != null) {
+                attribute = JsonHelper.getAttribute(jsonResponse);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+
+            if (result) {
+                String listString = "";
+                for (String s : attribute.getDocsList()) {
+                    listString += s + "#";
+                }
+                String servString = "";
+                if (attribute.getChildrenList() != null) {
+                    for (CategoryChild c : attribute.getChildrenList()) {
+                        servString += c.getId() + "!" + c.getTitle() + "#";
+                    }
+                }
+                String orgString = attribute.getOwner().getName();
+                Intent intent = new Intent(SearchActivity.this, AttributeActivity.class);
+                intent.putExtra("documents", listString);
+                intent.putExtra("orgs", orgString);
+                intent.putExtra("services", servString);
+                SearchActivity.this.startActivity(intent);
             } else {
                 Toast.makeText(SearchActivity.this, R.string.error_services, Toast.LENGTH_SHORT).show();
             }
