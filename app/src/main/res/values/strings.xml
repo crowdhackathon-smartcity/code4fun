@@ -3,4 +3,5 @@
     <string name="option_icon">Icon for this option</string>
     <string name="search_hint">Πληκτρολόγησε αυτό που θες...</string>
     <string name="choose_from_list">ή επέλεξε από τη παρακάτω λίστα</string>
+    <string name="error_services">Error while loading services</string>
 </resources>
