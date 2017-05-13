@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5916caa6f0603f2dc1b4b9a0"},"title":"Φωτοαντίγραφο Αστυνομικής Ταυτότητας","organizationCategory":"","requiredServices":[],"url":""}
+{"_id":{"$oid":"5916cb39f0603f2dc1b4b9a1"},"title":"Αίτηση χορήγησης πιστοποιητικού οικογενειακής κατάστασης","organizationCategory":"ΚΕΠ","requiredServices":[],"url":""}
+{"_id":{"$oid":"5916cc4bf0603f2dc1b4b9a3"},"title":"Χορήγηση πιστοποιητικού οικογενειακής κατάστασης","organizationCategory":"ΚΕΠ","requiredServices":[{"$oid":"5916caa6f0603f2dc1b4b9a0"},{"$oid":"5916cb39f0603f2dc1b4b9a1"}],"url":"http://www.ermis.gov.gr/portal/page/portal/ermis/FullStory?sid=459\u0026Tab=1"}
