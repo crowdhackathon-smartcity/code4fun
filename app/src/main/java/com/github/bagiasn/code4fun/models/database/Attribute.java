@@ -8,9 +8,21 @@ import java.util.ArrayList;
  */
 
 public class Attribute {
+
+    private String id;
     private Organization owner;
+    private String category;
     private String name;
-    private ArrayList<Attribute> attributeList;
+    private String externalLink;
+    private ArrayList<String> childrenList;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -18,6 +30,22 @@ public class Attribute {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getExternalLink() {
+        return externalLink;
+    }
+
+    public void setExternalLink(String externalLink) {
+        this.externalLink = externalLink;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Organization getOwner() {
@@ -28,11 +56,11 @@ public class Attribute {
         this.owner = owner;
     }
 
-    public ArrayList<Attribute> getAttributeList() {
-        return attributeList;
+    public ArrayList<String> getChildrenList() {
+        return childrenList;
     }
 
-    public void setAttributeList(ArrayList<Attribute> attributeList) {
-        this.attributeList = attributeList;
+    public void setChildrenList(ArrayList<String> childrenList) {
+        this.childrenList = childrenList;
     }
 }

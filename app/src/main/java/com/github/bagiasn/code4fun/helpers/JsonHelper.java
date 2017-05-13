@@ -1,6 +1,7 @@
 package com.github.bagiasn.code4fun.helpers;
 
 import com.github.bagiasn.code4fun.models.database.Attribute;
+import com.github.bagiasn.code4fun.models.database.Organization;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,15 +18,44 @@ public class JsonHelper {
     public static ArrayList<Attribute> getAttributes(String json) {
         ArrayList<Attribute> attributes = new ArrayList<>();
         try {
-            JSONObject jsonObj = new JSONObject(json);
+            JSONArray root = new JSONArray(json);
 
-            JSONArray services = jsonObj.getJSONArray("services");
+            for (int i = 0; i < root.length(); i++) {
+                JSONObject c = root.getJSONObject(i);
 
-            for (int i = 0; i < services.length(); i++) {
-                JSONObject c = services.getJSONObject(i);
+                String id = c.getString("_id");
+                String category = c.getString("category");
+                String title = c.getString("title");
+                String orgCategory = c.getString("organizationCategory");
+                String url = c.getString("url");
+                JSONArray requiredAttr = c.getJSONArray("requiredServices");
+                // Start building the attribute.
+                Attribute attr = new Attribute();
+                if (requiredAttr == null || requiredAttr.length() == 0) {
+                    // This is a document.
+                    attr.setChildrenList(null);
+                } else {
+                    ArrayList<String> childAttributes = new ArrayList<>();
+                    for (int j = 0; i < requiredAttr.length(); i++) {
+                        JSONObject child = root.getJSONObject(j);
+                        if (child != null)
+                            childAttributes.add(child.getString("_id"));
+                    }
+                    attr.setChildrenList(childAttributes);
+                }
+                attr.setId(id);
+                attr.setName(title);
+                attr.setCategory(category);
+                if (url.isEmpty())
+                    attr.setExternalLink("");
+                else
+                    attr.setExternalLink(url);
+                Organization org = new Organization();
+                org.setName(orgCategory);
+                attr.setOwner(org);
 
-                String name = c.getString("name");
-                // ...
+                attributes.add(attr);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
