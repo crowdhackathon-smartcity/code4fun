@@ -10,6 +10,7 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -37,6 +38,7 @@ public class AttributeActivity extends Activity implements View.OnClickListener 
         final String link = callingIntent.getStringExtra("link");
         organizations = callingIntent.getStringExtra("orgs");
         String childAttributes = callingIntent.getStringExtra("services");
+        ListView listDocuments = (ListView) findViewById(R.id.list_documents);
         if (!childAttributes.isEmpty()) {
             ArrayList<CategoryChild> categoryChildren = new ArrayList<>();
             String[] servicesList = childAttributes.split("#");
@@ -52,9 +54,12 @@ public class AttributeActivity extends Activity implements View.OnClickListener 
             recyclerServices.setAdapter(new CategoryChildAdapter(categoryChildren, this));
             recyclerServices.setLayoutManager(new LinearLayoutManager(this));
             recyclerServices.addItemDecoration(new OptionItemDecoration(5));
+        } else {
+            TextView lblServices = (TextView) findViewById(R.id.label_services);
+            lblServices.setVisibility(View.INVISIBLE);
+            listDocuments.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
         }
         String[] documentsList = documents.split("#");
-        ListView listDocuments = (ListView) findViewById(R.id.list_documents);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_selectable_list_item, documentsList);
         listDocuments.setAdapter(adapter);
