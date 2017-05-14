@@ -160,9 +160,13 @@ public class SearchActivity extends Activity {
                 }
                 String orgString = attribute.getOwner().getName();
                 Intent intent = new Intent(SearchActivity.this, AttributeActivity.class);
+                intent.putExtra("title", attribute.getName());
                 intent.putExtra("documents", listString);
                 intent.putExtra("orgs", orgString);
                 intent.putExtra("services", servString);
+                intent.putExtra("link", attribute.getExternalLink());
+                // Save before starting the new activity.
+                saveSearch(attribute.getId(), attribute.getName());
                 SearchActivity.this.startActivity(intent);
             } else {
                 Toast.makeText(SearchActivity.this, R.string.error_services, Toast.LENGTH_SHORT).show();
@@ -215,9 +219,11 @@ public class SearchActivity extends Activity {
                     }
                     String orgString = selectedAttr.getOwner().getName();
                     Intent intent = new Intent(SearchActivity.this, AttributeActivity.class);
+                    intent.putExtra("title", selectedAttr.getName());
                     intent.putExtra("documents", listString);
                     intent.putExtra("orgs", orgString);
                     intent.putExtra("services", servString);
+                    intent.putExtra("link", selectedAttr.getExternalLink());
                     // Save before starting the new activity.
                     saveSearch(selectedAttr.getId(), selectedAttr.getName());
                     SearchActivity.this.startActivity(intent);

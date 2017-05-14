@@ -134,9 +134,12 @@ public class GVoiceRecog implements Runnable {
                 }
                 String orgString = attribute.getOwner().getName();
                 Intent intent = new Intent(context, AttributeActivity.class);
+                intent.putExtra("title", attribute.getName());
                 intent.putExtra("documents", listString);
                 intent.putExtra("orgs", orgString);
                 intent.putExtra("services", servString);
+                intent.putExtra("link", attribute.getExternalLink());
+
                 saveSearch(attribute.getId(), attribute.getName());
                 context.startActivity(intent);
             } else {

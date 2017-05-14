@@ -104,9 +104,11 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<CategoryChildAdap
                 }
                 String orgString = attribute.getOwner().getName();
                 Intent intent = new Intent(context, AttributeActivity.class);
+                intent.putExtra("title", attribute.getName());
                 intent.putExtra("documents", listString);
                 intent.putExtra("orgs", orgString);
                 intent.putExtra("services", servString);
+                intent.putExtra("link", attribute.getExternalLink());
                 context.startActivity(intent);
             } else {
                 Toast.makeText(context, R.string.error_services, Toast.LENGTH_SHORT).show();

@@ -6,6 +6,13 @@
     android:orientation="vertical"
     tools:context="com.github.bagiasn.code4fun.activities.AttributeActivity">
     <TextView
+        android:id="@+id/header_attr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:textStyle="bold"/>
+    <TextView
         android:id="@+id/label_closest_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

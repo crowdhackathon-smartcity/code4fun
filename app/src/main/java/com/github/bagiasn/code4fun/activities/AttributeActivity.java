@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import com.github.bagiasn.code4fun.R;
@@ -26,7 +29,9 @@ public class AttributeActivity extends Activity implements View.OnClickListener 
         setContentView(R.layout.activity_attribute);
 
         Intent callingIntent = getIntent();
+        String title = callingIntent.getStringExtra("title");
         String documents = callingIntent.getStringExtra("documents");
+        String link = callingIntent.getStringExtra("link");
         organizations = callingIntent.getStringExtra("orgs");
         String childAttributes = callingIntent.getStringExtra("services");
         if (!childAttributes.isEmpty()) {
@@ -50,6 +55,17 @@ public class AttributeActivity extends Activity implements View.OnClickListener 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_selectable_list_item, documentsList);
         listDocuments.setAdapter(adapter);
+
+        if (!link.isEmpty()) {
+            TextView textView = (TextView) findViewById(R.id.label_documents);
+            textView.setClickable(true);
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            String text = "<a href='" + link + "'>" + getString(R.string.required_documents) + "</a>";
+            textView.setText(Html.fromHtml(text));
+        }
+
+        TextView header = (TextView) findViewById(R.id.header_attr);
+        header.setText(title);
 
         Button btnMaps = (Button) findViewById(R.id.button_maps);
         btnMaps.setOnClickListener(this);
