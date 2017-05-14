@@ -1,0 +1,3 @@
+All the repository's code complies with the crowdhackathon-smartcity rules.
+
+All the icons used, where downloaded from https://www.iconfinder.com/, under Creative Commons license or Free for commercial use.
