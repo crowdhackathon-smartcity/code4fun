@@ -8,7 +8,7 @@
     <string name="voice_search_button">voice_search_content_desc</string>
     <string name="required_documents">Απαιτούμενα έγγραφα</string>
     <string name="closest_location_label">Κοντινότερα σημεία εξυπηρέτησης</string>
-    <string name="show_map">Δες τον χάρτη</string>
+    <string name="show_map">Δες τον χαρτη</string>
     <string name="no_permissions">No permissions given</string>
     <string name="required_services_label">Απαιτούμενες ενέργειες</string>
     <string name="error_markers">Could not load markers</string>

@@ -36,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<OrganizationMarker> markers;
     private String keyword;
     private Location knownLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +64,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googleMap.animateCamera(CameraUpdateFactory.zoomIn());
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(12), 2000, null);
 
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(knownLocation.getLatitude(), knownLocation.getLongitude()))
-                .title("Εσείς"));
-
         new GetMarkers().execute(keyword,
                 String.valueOf(knownLocation.getLongitude()),
                 String.valueOf(knownLocation.getLatitude()));
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("Google Map", getString(R.string.no_permissions));
+            return;
+        }
+        googleMap.setMyLocationEnabled(true);
     }
 
     private class GetMarkers extends AsyncTask<String,Void, Boolean> {
