@@ -2,6 +2,7 @@ package com.github.bagiasn.code4fun.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,14 +13,14 @@ import android.widget.Toast;
 
 import com.github.bagiasn.code4fun.R;
 import com.github.bagiasn.code4fun.activities.AttributeActivity;
-import com.github.bagiasn.code4fun.activities.SearchActivity;
 import com.github.bagiasn.code4fun.helpers.HttpHelper;
 import com.github.bagiasn.code4fun.helpers.JsonHelper;
 import com.github.bagiasn.code4fun.models.database.Attribute;
 import com.github.bagiasn.code4fun.models.database.CategoryChild;
-import com.github.bagiasn.code4fun.models.database.Organization;
 
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Adapter for populating attributes into the search list.
@@ -48,6 +49,7 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<CategoryChildAdap
         @Override
         public void onClick(View v) {
             CategoryChild selectedChild = children.get(getAdapterPosition());
+            saveSearch(selectedChild.getId(), selectedChild.getTitle());
             new GetAttributeById().execute(selectedChild.getId());
         }
     }
@@ -79,7 +81,7 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<CategoryChildAdap
             String url = "http://46.101.196.53:54870/getServiceById?serviceId=" + params[0];
             String jsonResponse = HttpHelper.makeJsonRequest(url);
             if (jsonResponse != null) {
-                attribute = JsonHelper.getAttribute(jsonResponse);
+                attribute = JsonHelper.getAttribute(jsonResponse, true);
                 return true;
             }
             return false;
@@ -110,5 +112,18 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<CategoryChildAdap
                 Toast.makeText(context, R.string.error_services, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void saveSearch(String id, String title) {
+        SharedPreferences  prefs = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        String history = prefs.getString("SavedSearches", "");
+        // Avoid duplicates.
+        if (history.contains(id)) return;
+
+        history+= id + "!" + title + "#";
+
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString("SavedSearches", history);
+        prefsEditor.apply();
     }
 }

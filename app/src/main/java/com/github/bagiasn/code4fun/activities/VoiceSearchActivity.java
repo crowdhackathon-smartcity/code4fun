@@ -1,6 +1,7 @@
 package com.github.bagiasn.code4fun.activities;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,8 +11,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.github.bagiasn.code4fun.R;
+import com.github.bagiasn.code4fun.models.database.CategoryChild;
 import com.github.bagiasn.code4fun.others.GVoiceRecog;
 import com.github.bagiasn.code4fun.others.OptionItemDecoration;
+import com.google.gson.Gson;
 
 public class VoiceSearchActivity extends Activity implements View.OnClickListener {
 

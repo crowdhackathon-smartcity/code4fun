@@ -103,11 +103,16 @@ public class JsonHelper {
         return markers;
     }
 
-    public static Attribute getAttribute(String json) {
+    public static Attribute getAttribute(String json, boolean isRootArray) {
         Attribute attribute = new Attribute();
         try {
-            JSONArray root = new JSONArray(json);
-            JSONObject item = root.getJSONObject(0);
+            JSONObject item;
+            if (isRootArray) {
+                JSONArray root = new JSONArray(json);
+                item = root.getJSONObject(0);
+            } else {
+                item = new JSONObject(json);
+            }
 
             String id = item.getString("_id");
             String category = item.getString("category");
@@ -154,6 +159,7 @@ public class JsonHelper {
 
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
 
         return attribute;

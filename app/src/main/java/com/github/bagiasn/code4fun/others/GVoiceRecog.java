@@ -2,10 +2,9 @@ package com.github.bagiasn.code4fun.others;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -14,18 +13,14 @@ import android.widget.Toast;
 
 import com.github.bagiasn.code4fun.R;
 import com.github.bagiasn.code4fun.activities.AttributeActivity;
-import com.github.bagiasn.code4fun.activities.MapsActivity;
-import com.github.bagiasn.code4fun.activities.SearchActivity;
-import com.github.bagiasn.code4fun.activities.VoiceSearchActivity;
 import com.github.bagiasn.code4fun.helpers.HttpHelper;
 import com.github.bagiasn.code4fun.helpers.JsonHelper;
 import com.github.bagiasn.code4fun.models.database.Attribute;
 import com.github.bagiasn.code4fun.models.database.CategoryChild;
-import com.github.bagiasn.code4fun.models.database.OrganizationMarker;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * This class handles all the NLP functionality.
@@ -115,8 +110,9 @@ public class GVoiceRecog implements Runnable {
             String url = "http://46.101.196.53:54870/processText";
             String jsonResponse = HttpHelper.makeNlpRequest(url, params[0]);
             if (jsonResponse != null) {
-                attribute = JsonHelper.getAttribute(jsonResponse);
-                return true;
+                attribute = JsonHelper.getAttribute(jsonResponse, false);
+                if (attribute != null)
+                    return true;
             }
             return false;
         }
@@ -141,10 +137,23 @@ public class GVoiceRecog implements Runnable {
                 intent.putExtra("documents", listString);
                 intent.putExtra("orgs", orgString);
                 intent.putExtra("services", servString);
+                saveSearch(attribute.getId(), attribute.getName());
                 context.startActivity(intent);
             } else {
-                Toast.makeText(context, R.string.error_markers, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.error_nlu, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    private void saveSearch(String id, String title) {
+        SharedPreferences  prefs = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        String history = prefs.getString("SavedSearches", "");
+        // Avoid duplicates.
+        if (history.contains(id)) return;
+
+        history+= id + "!" + title + "#";
+
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString("SavedSearches", history);
+        prefsEditor.apply();
     }
 }

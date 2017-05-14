@@ -2,6 +2,7 @@ package com.github.bagiasn.code4fun.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.bagiasn.code4fun.R;
-import com.github.bagiasn.code4fun.adapters.CategoryChildAdapter;
 import com.github.bagiasn.code4fun.helpers.HttpHelper;
 import com.github.bagiasn.code4fun.helpers.JsonHelper;
 import com.github.bagiasn.code4fun.models.database.Attribute;
@@ -95,6 +95,7 @@ public class SearchActivity extends Activity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String selectedTitle = autoCompleteList.get(position);
                         String selectedId = getIdFromList(selectedTitle);
+                        saveSearch(selectedId, selectedTitle);
                         new GetAttributeById().execute(selectedId);
                     }
                 });
@@ -116,6 +117,19 @@ public class SearchActivity extends Activity {
         return "";
     }
 
+    private void saveSearch(String id, String title) {
+        SharedPreferences  prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        String history = prefs.getString("SavedSearches", "");
+        // Avoid duplicates.
+        if (history.contains(id)) return;
+
+        history+= id + "!" + title + "#";
+
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString("SavedSearches", history);
+        prefsEditor.apply();
+    }
+
     private class GetAttributeById extends AsyncTask<String,Void, Boolean> {
         private Attribute attribute;
         @Override
@@ -123,7 +137,7 @@ public class SearchActivity extends Activity {
             String url = "http://46.101.196.53:54870/getServiceById?serviceId=" + params[0];
             String jsonResponse = HttpHelper.makeJsonRequest(url);
             if (jsonResponse != null) {
-                attribute = JsonHelper.getAttribute(jsonResponse);
+                attribute = JsonHelper.getAttribute(jsonResponse, true);
                 return true;
             }
             return false;
@@ -204,6 +218,8 @@ public class SearchActivity extends Activity {
                     intent.putExtra("documents", listString);
                     intent.putExtra("orgs", orgString);
                     intent.putExtra("services", servString);
+                    // Save before starting the new activity.
+                    saveSearch(selectedAttr.getId(), selectedAttr.getName());
                     SearchActivity.this.startActivity(intent);
 
                 }

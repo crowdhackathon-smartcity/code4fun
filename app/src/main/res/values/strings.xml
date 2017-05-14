@@ -12,4 +12,6 @@
     <string name="no_permissions">No permissions given</string>
     <string name="required_services_label">Απαιτούμενες ενέργειες</string>
     <string name="error_markers">Could not load markers</string>
+    <string name="history_search_label">Ιστορικό αναζητήσεων</string>
+    <string name="error_nlu">Παρακαλώ επαναλάβατε.</string>
 </resources>

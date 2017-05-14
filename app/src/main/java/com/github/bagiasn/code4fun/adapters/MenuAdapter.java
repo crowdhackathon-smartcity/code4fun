@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.github.bagiasn.code4fun.R;
 import com.github.bagiasn.code4fun.activities.SearchActivity;
+import com.github.bagiasn.code4fun.activities.SearchHistoryActivity;
 import com.github.bagiasn.code4fun.activities.VoiceSearchActivity;
 import com.github.bagiasn.code4fun.models.app.Option;
 
@@ -57,7 +58,7 @@ public class MenuAdapter extends Adapter<MenuAdapter.MenuViewHolder>{
                     context.startActivity(intent);
                     break;
                 case "Αποθηκευμένες αναζητήσεις":
-                    intent = new Intent(context, SearchActivity.class);
+                    intent = new Intent(context, SearchHistoryActivity.class);
                     context.startActivity(intent);
                     break;
                 default:
