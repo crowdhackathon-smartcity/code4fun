@@ -1,7 +1,8 @@
 # code4fun
 
-This project, now, consists of two parts:
-1. Android app - for searching supporting documents, getting valuable info, voice-searching.
-2. NodeJS - for managing the whole backend functionality, including database management, retrieving info etc.
+City Kiosk
 
-Code from 2 coming soon.
+This project consists of two systemic parts:
+1. Android app - for searching supporting documents, getting valuable info, like nearest map spots, voice-searching.
+2. NodeJS - for managing the whole backend functionality, including database management, retrieving public data info etc.
+
