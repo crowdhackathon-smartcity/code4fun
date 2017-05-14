@@ -4,12 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#e1f5fe"
     tools:context="com.github.bagiasn.code4fun.activities.AttributeActivity">
     <TextView
         android:id="@+id/header_attr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="22sp"
+        android:textColor="@android:color/white"
+        android:background="#40c4ff"
+        android:padding="10dp"
         android:gravity="center"
         android:textStyle="bold"/>
     <TextView
@@ -18,35 +22,57 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="@string/closest_location_label"/>
-    <Button
-        android:id="@+id/button_maps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/show_map"
-        android:layout_gravity="center"/>
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/button_maps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#40c4ff"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:padding="5dp"
+            android:layout_marginStart="30dp"
+            android:text="@string/show_map"/>
+        <Button
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/button_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#40c4ff"
+            android:textColor="@android:color/white"
+            android:padding="5dp"
+            android:text="@string/link_text"
+            android:layout_marginStart="15dp"
+            android:visibility="gone"/>/>
+    </LinearLayout>
     <TextView
         android:id="@+id/label_documents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/required_documents"
-        android:layout_margin="20dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"/>
 
     <ListView
         android:id="@+id/list_documents"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:padding="20dp"/>
     <TextView
         android:id="@+id/label_services"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/required_services_label"
-        android:layout_margin="20dp"/>
+        android:layout_marginStart="20dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_services"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="20dp"/>
 
 </LinearLayout>

@@ -24,10 +24,10 @@ public class MenuActivity extends AppCompatActivity {
         menu.setAdapter(menuAdapter);
 
         menu.setLayoutManager(new LinearLayoutManager(this));
-        menu.addItemDecoration(new OptionItemDecoration(15));
+        menu.addItemDecoration(new OptionItemDecoration(5));
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        myToolbar.setSubtitle("Ο ψηφιακός βοηθός του κάθε δημότη");
+        myToolbar.setSubtitle("O ψηφιακός βοηθός του πολίτη");
         myToolbar.setSubtitleTextAppearance(this, R.style.Toolbar_SubTitle);
     }
 }

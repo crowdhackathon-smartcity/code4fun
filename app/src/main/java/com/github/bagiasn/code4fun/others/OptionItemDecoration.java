@@ -19,9 +19,5 @@ public class OptionItemDecoration extends RecyclerView.ItemDecoration {
         outRect.left = space;
         outRect.right = space;
         outRect.bottom = space;
-
-        // Add space only for the first child, to avoid double spacing
-        if(parent.getChildAdapterPosition(view) == 0)
-            outRect.top = space;
     }
 }

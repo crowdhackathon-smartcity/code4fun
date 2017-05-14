@@ -2,9 +2,9 @@
     <string name="app_name">City Kiosk</string>
     <string name="option_icon">Icon for this option</string>
     <string name="search_hint">Πληκτρολόγησε εδώ…</string>
-    <string name="choose_from_list">ή επέλεξε από τη παρακάτω λίστα</string>
+    <string name="choose_from_list">ή επέλεξε από τις παρακάτω λίστες</string>
     <string name="error_services">Error while loading services</string>
-    <string name="voice_search_text">Πατήστε το πλήκτρο για να ξεκινήσει η ηχογράφηση</string>
+    <string name="voice_search_text">Πατήστε στην εικόνα για να ξεκινήσει η ηχογράφηση</string>
     <string name="voice_search_button">voice_search_content_desc</string>
     <string name="required_documents">Απαιτούμενα έγγραφα</string>
     <string name="closest_location_label">Κοντινότερα σημεία εξυπηρέτησης</string>
@@ -14,4 +14,5 @@
     <string name="error_markers">Could not load markers</string>
     <string name="history_search_label">Ιστορικό αναζητήσεων</string>
     <string name="error_nlu">Παρακαλώ επαναλάβατε.</string>
+    <string name="link_text">online</string>
 </resources>

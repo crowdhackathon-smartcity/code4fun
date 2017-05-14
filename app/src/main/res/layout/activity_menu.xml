@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e1f5fe"
     tools:context="com.github.bagiasn.code4fun.activities.MenuActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="?attr/colorPrimary"
+        android:background="#40c4ff"
         android:elevation="4dp"
         app:titleTextAppearance="@style/Toolbar.TitleText"/>
     <android.support.v7.widget.RecyclerView

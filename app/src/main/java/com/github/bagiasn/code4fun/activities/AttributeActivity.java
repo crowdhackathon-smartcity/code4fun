@@ -2,15 +2,18 @@ package com.github.bagiasn.code4fun.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -31,7 +34,7 @@ public class AttributeActivity extends Activity implements View.OnClickListener 
         Intent callingIntent = getIntent();
         String title = callingIntent.getStringExtra("title");
         String documents = callingIntent.getStringExtra("documents");
-        String link = callingIntent.getStringExtra("link");
+        final String link = callingIntent.getStringExtra("link");
         organizations = callingIntent.getStringExtra("orgs");
         String childAttributes = callingIntent.getStringExtra("services");
         if (!childAttributes.isEmpty()) {
@@ -57,11 +60,22 @@ public class AttributeActivity extends Activity implements View.OnClickListener 
         listDocuments.setAdapter(adapter);
 
         if (!link.isEmpty()) {
-            TextView textView = (TextView) findViewById(R.id.label_documents);
-            textView.setClickable(true);
-            textView.setMovementMethod(LinkMovementMethod.getInstance());
-            String text = "<a href='" + link + "'>" + getString(R.string.required_documents) + "</a>";
-            textView.setText(Html.fromHtml(text));
+            Button btnLink = (Button) findViewById(R.id.button_link);
+            btnLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uri = Uri.parse(link);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
+            });
+            btnLink.setVisibility(View.VISIBLE);
+
+//            TextView textView = (TextView) findViewById(R.id.label_documents);
+//            textView.setClickable(true);
+//            textView.setMovementMethod(LinkMovementMethod.getInstance());
+//            String text = "<a href='" + link + "'>" + getString(R.string.required_documents) + "</a>";
+//            textView.setText(Html.fromHtml(text));
         }
 
         TextView header = (TextView) findViewById(R.id.header_attr);

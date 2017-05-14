@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:background="@drawable/menu_border"
+    android:layout_marginBottom="13dp"
+    android:padding="15dp">
 
     <ImageView
         android:id="@+id/option_icon"
@@ -30,6 +32,7 @@
         android:layout_toEndOf="@+id/option_icon"
         android:layout_below="@id/option_title"
         android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:padding="5dp"
         android:textStyle="italic"
         android:fontFamily="serif"

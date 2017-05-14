@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.github.bagiasn.code4fun.R;
 import com.github.bagiasn.code4fun.activities.AttributeActivity;
+import com.github.bagiasn.code4fun.activities.VoiceSearchActivity;
 import com.github.bagiasn.code4fun.helpers.HttpHelper;
 import com.github.bagiasn.code4fun.helpers.JsonHelper;
 import com.github.bagiasn.code4fun.models.database.Attribute;
@@ -48,6 +49,8 @@ public class GVoiceRecog implements Runnable {
             speechRecognizer.setRecognitionListener(null);
             speechRecognizer.destroy();
             speechRecognizer = null;
+            VoiceSearchActivity parent = (VoiceSearchActivity) context;
+            parent.hideProgress();
         }
     }
     @Override
@@ -55,6 +58,8 @@ public class GVoiceRecog implements Runnable {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
         speechRecognizer.setRecognitionListener(new NlpListener());
         speechRecognizer.startListening(recognitionIntent);
+        VoiceSearchActivity parent = (VoiceSearchActivity) context;
+        parent.showProgress();
     }
 
     private class NlpListener implements RecognitionListener {

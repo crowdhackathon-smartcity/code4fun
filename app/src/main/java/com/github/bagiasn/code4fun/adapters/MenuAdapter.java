@@ -57,7 +57,7 @@ public class MenuAdapter extends Adapter<MenuAdapter.MenuViewHolder>{
                     intent = new Intent(context, VoiceSearchActivity.class);
                     context.startActivity(intent);
                     break;
-                case "Αποθηκευμένες αναζητήσεις":
+                case "Ιστορικό Αναζητήσεων":
                     intent = new Intent(context, SearchHistoryActivity.class);
                     context.startActivity(intent);
                     break;

@@ -10,12 +10,12 @@
 
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">26sp</item>
-        <item name="android:color">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">serif</item>
     </style>
     <style name="Toolbar.SubTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:textSize">12sp</item>
-        <item name="android:color">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:fontFamily">serif</item>
         <item name="android:textStyle">italic</item>
     </style>

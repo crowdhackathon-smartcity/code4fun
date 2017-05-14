@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="20dp"
+    android:background="#e1f5fe"
     tools:context="com.github.bagiasn.code4fun.activities.VoiceSearchActivity">
     <TextView
         android:id="@+id/label_voice_search"
@@ -24,9 +25,12 @@
         android:layout_gravity="center"
         android:contentDescription="@string/voice_search_button" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/attribute_list_voice"
+    <ProgressBar
+        android:id="@+id/speaking_progress"
+        android:visibility="invisible"
+        android:layout_marginTop="100dp"
+        android:indeterminate="true"
+        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>
